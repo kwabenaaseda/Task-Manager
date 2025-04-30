@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task Manager with Drawer</title>
+  <link rel="stylesheet" href="/styles/homepage.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <button class="menu-toggle" id="menuToggleBtn" aria-label="Toggle Menu">☰</button>
+    <h1 class="app-title">StackTasks</h1>
+    <div class="header-icons">
+        <button class="icon-btn" id="messageBtn" title="Messages">💬</button>
+        <button class="icon-btn" id="userBtn" title="User">AB</button>
+    </div>
+</header>
+
+
+  <!-- Main Content -->
+  <main id="main">
+    <!-- Tasks will be appended here -->
+  </main>
+
+  <!-- Task Entry Modal -->
+  <div class="task-modal-overlay" id="taskModalOverlay"></div>
+  <div class="task-modal" id="taskModal">
+    <h2>Add New Task</h2>
+    <form id="taskForm">
+      <input type="text" id="taskName" placeholder="Task Name" required />
+      <select id="taskPriority">
+        <option value="low">Low Priority</option>
+        <option value="medium">Medium Priority</option>
+        <option value="high">High Priority</option>
+      </select>
+      <input type="datetime-local" id="taskSchedule" />
+      <textarea id="taskDesc" placeholder="Task Description"></textarea>
+      <label><input type="checkbox" id="shareTask" /> Share Task</label>
+      <label><input type="checkbox" id="collaborateTask" /> Collaborate</label>
+      <button type="submit">Add Task</button>
+    </form>
+  </div>
+
+  <!-- Messages Popup -->
+  <div class="message-popup" id="messagePopup">
+    <h3>Messages</h3>
+    <ul>
+      <li>Welcome to your task manager!</li>
+      <li>New update coming soon!</li>
+    </ul>
+  </div>
+
+  <!-- Bottom Add Button (Floating Action Button) -->
+  <button class="add-btn" id="addBtn" title="Quick Add Task">➕</button>
+
+  <!-- Sidebar Drawer -->
+  <div class="side-menu-overlay" id="overlay"></div>
+  <aside class="side-menu" id="sideMenu">
+    <button class="close-btn" id="closeBtn">×</button>
+
+    <div class="side-section">
+      <h3>Tasks</h3>
+      <nav>
+        <ul>
+          <li><a href="#" id="ongoingTasksLink" class="menu-item">📌 Ongoing</a></li>
+          <li><a href="#" id="scheduledTasksLink" class="menu-item">🗓️ Scheduled</a></li>
+          <li><a href="#" id="previousTasksLink" class="menu-item">📁 Previous</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <hr />
+
+    <div class="side-section">
+      <h3>Preferences</h3>
+      <nav>
+        <ul>
+          <li><a href="#" class="menu-item">👤 Profile</a></li>
+          <li><a href="#" class="menu-item">⚙️ Settings</a></li>
+          <li><button class="menu-item" id="darkModeToggle">🌓 Dark Mode</button></li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- Fixed Bottom Task Bar (Optional Visual Button) -->
+  <div class="task-bar">
+    <button class="add-button" id="openBtn" aria-label="Add Task">
+      <img src="/image/PlusAdd.png" alt="Plus Icon" />
+    </button>
+  </div>
+
+  <!-- Scripts -->
+  <script src="/js/homepage.js"></script>
+</body>
+</html>
