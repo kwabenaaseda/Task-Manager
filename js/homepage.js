@@ -4,6 +4,8 @@ const taskModal = document.getElementById("taskModal");
 const taskModalOverlay = document.getElementById("taskModalOverlay");
 const taskForm = document.getElementById("taskForm");
 const main = document.getElementById("main");
+const messageBtn = document.getElementById("messageBtn")
+const messagePopup= document.getElementById("messagePopup")
 
 // Sidebar elements
 const menuToggleBtn = document.getElementById("menuToggleBtn");
@@ -48,11 +50,36 @@ taskForm.addEventListener("submit", (e) => {
   `;
 
   main.appendChild(task);
+  
+  const emptyState = document.getElementById("emptyState");
+  const tasks = document.querySelectorAll(".task-item");
+  
+  
+  
+      if (tasks.length > 0) {
+          emptyState.style.display = "none";
+        } 
+        else{
+          emptyState.style.display = "flex";
+        }
+  
 
   // Close modal
   taskModal.style.display = "none";
   taskModalOverlay.style.display = "none";
   taskForm.reset();
+  var reference = {
+    "name":name,
+    "priority":priority,
+    "schedule":schedule,
+    "description":desc,
+    "share":share,
+    "collab":collaborate
+  }
+  var store = main.children.length-1;
+  console.log(store)
+  console.log(reference)
+  localStorage.setItem(store,`${reference.name} Priority:${reference.priority} Schedule:${reference.schedule||"Not Scheduled"} Description:${reference.description} ${`Share: ${reference.share}`||""} ${`Collab: ${reference.collab}`||""}`)
 });
 
 // Side Menu Handlers
@@ -67,7 +94,6 @@ function toggleSideMenu() {
 
 // Sidebar Navigation
 document.getElementById("ongoingTasksLink").addEventListener("click", () => {
-  main.innerHTML = "<h3>Ongoing Tasks</h3>";
   toggleSideMenu();
 });
 
@@ -135,3 +161,52 @@ darkToggleBtn.addEventListener("click", () => {
   localStorage.setItem("theme", isDark ? "dark" : "light");
   updateMode();
 });
+
+for (let i = 1; i < localStorage.length; i++) {
+    var reciept=localStorage.getItem(i)
+    console.log(reciept.indexOf(`Priority`))
+    let transmitter={
+        "name":reciept.slice(0,reciept.indexOf(`Priority`)),
+        "priority":reciept.slice(reciept.indexOf("Priority"),reciept.indexOf("Schedule")),
+        "schedule":reciept.slice(reciept.indexOf("Schedule"),reciept.indexOf("Description")),
+        "description":reciept.slice(reciept.indexOf("Description"),reciept.indexOf("Share")),
+        "share":reciept.slice(reciept.indexOf("Share"),reciept.indexOf("Collab")),
+        "collab":reciept.slice(reciept.indexOf("Collab"))
+    }
+    console.log(reciept)
+    console.log(transmitter)
+    const task = document.createElement("div");
+  task.classList.add("task-item");
+    task.innerHTML = `
+    <strong>${transmitter.name}</strong><br>
+     ${transmitter.priority}<br>
+    ${transmitter.schedule}<br>
+    ${transmitter.description}<br>
+    ${transmitter.share}<br>
+    ${transmitter.collab}<br>
+  `;
+    console.log(task)
+    main.append(task)
+}
+
+const emptyState = document.getElementById("emptyState");
+const tasks = document.querySelectorAll(".task-item");
+
+
+
+    if (tasks.length > 0) {
+        emptyState.style.display = "none";
+      } 
+      else{
+        emptyState.style.display = "flex";
+      }
+
+
+console.log(localStorage.length)
+
+messageBtn.addEventListener("click",toggleMessagePopUp)
+
+function toggleMessagePopUp(){
+    messagePopup.classList.toggle("open");
+    messagePopup.classList.toggle("active");
+}

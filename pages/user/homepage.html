@@ -20,7 +20,12 @@
 
   <!-- Main Content -->
   <main id="main">
-    <!-- Tasks will be appended here -->
+    <div class="empty-state" id="emptyState">
+        <img src="/image/Binocularsbino.png" alt="No Tasks" class="empty-img" />
+        <h2>ADD A TASK</h2>
+        <p><a href="#" id="learnMore"><img src="/image/Supporthelp.png" alt="">Learn More</a></p>
+      </div>
+      
   </main>
 
   <!-- Task Entry Modal -->
@@ -36,8 +41,8 @@
       </select>
       <input type="datetime-local" id="taskSchedule" />
       <textarea id="taskDesc" placeholder="Task Description"></textarea>
-      <label><input type="checkbox" id="shareTask" /> Share Task</label>
-      <label><input type="checkbox" id="collaborateTask" /> Collaborate</label>
+      <label class="itenary"><input type="checkbox" id="shareTask" /> Share Task<img src="/image/github-removebg-preview.png" alt="share"></label>
+      <label class="itenary"><input type="checkbox" id="collaborateTask" />Collaborate<img src="/image/PlusAdd.png" alt="collab"></label>
       <button type="submit">Add Task</button>
     </form>
   </div>

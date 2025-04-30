@@ -31,19 +31,44 @@
       <header><h2>StackTasks</h2>
         <img src="/image/BookmarkBook.png" alt="Bookmark Book" id="bookmark" id="image">
     </header>
-    <form>
-        <input type="email" placeholder="Mail or Username" required>
-        <input type="password" placeholder="Password" required>
-        <a href="/pages/user/homepage.html"><button>Log In</button></a>
-        <hr>
-        <div class="social">
-          <img src="/image/Facebook-Newfacebook.png" alt="social" title="facebook">
-          <img src="/image/twitter-removebg-preview.png" alt="social" title="twitter(x)">
-          <img src="/image/github-removebg-preview.png" alt="social" title="github">
-          <img src="/image/google_bg_-removebg-preview.png" alt="social" title="google">
+    <form id="loginForm">
+      <input type="email" id="loginEmail" placeholder="Mail or Username" required>
+      <input type="password" id="loginPassword" placeholder="Password" required>
+      <button type="submit">Log In</button>
+      <p id="loginError" style="color: red;"></p>
+      <hr>
+      <div class="social">
+        <img src="/image/Facebook-Newfacebook.png" alt="facebook">
+        <img src="/image/twitter-removebg-preview.png" alt="twitter">
+        <img src="/image/github-removebg-preview.png" alt="github">
+        <img src="/image/google_bg_-removebg-preview.png" alt="google">
       </div>
-    </form> 
+    </form>
+     
     </div>
   </div>
+
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value.trim();
+      const error = document.getElementById("loginError");
+
+      // Simple email regex
+      const validEmail = /^[^@]+@[^@]+\.[a-z]{2,}$/i;
+
+      if (!validEmail.test(email)) {
+        error.textContent = "Please enter a valid email address.";
+      } else if (password.length < 6) {
+        error.textContent = "Password must be at least 6 characters.";
+      } else {
+        error.textContent = "";
+        // Redirect on success
+        window.location.href = "/pages/user/homepage.html";
+      }
+    });
+  </script>
 </body>
 </html>

@@ -1,3 +1,7 @@
+*{
+    list-style: none;
+}
+
 :root { 
     --bg-light: #ffffff;
     --bg-dark: #1e1e1e;
@@ -34,6 +38,7 @@ body {
     min-height: 100vh;
     color:#f0f0f0;
     transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-y: hidden;
 }
 
 /* Sidebar */
@@ -141,6 +146,7 @@ body {
 main {
     flex: 1;
     padding: 80px 16px 120px; /* top, sides, bottom (to avoid the task bar) */
+    overflow-y: hidden;
 }
 
 /* Task bar */
@@ -217,6 +223,9 @@ main {
     transition: opacity 0.3s ease;
     z-index: 99;
 }
+.message-popup{
+    color: black;
+}
 
 /* Active classes */
 .side-menu.open {
@@ -224,6 +233,15 @@ main {
 }
 
 .side-menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+.message-popup.open {
+    right: 0;
+}
+
+
+.message-popup.active {
     opacity: 1;
     visibility: visible;
 }
@@ -236,6 +254,7 @@ main {
     border-left: 4px solid #007bff;
     border-radius: 4px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    color: black;
 }
 
 .task-modal-overlay {
@@ -259,7 +278,9 @@ main {
     display: none;
     z-index: 200;
     box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    color: #000000;
 }
+
 
 .task-modal input,
 .task-modal select,
@@ -272,6 +293,8 @@ main {
     border-radius: 6px;
 }
 
+
+
 .task-modal button[type="submit"] {
     background-color: var(--btn-bg);
     color: white;
@@ -280,4 +303,65 @@ main {
     width: 100%;
     border-radius: 6px;
     cursor: pointer;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    text-align: center;
+    color: #555;
+    opacity: 0.8;
+  }
+  
+  .empty-img {
+    max-width: 300px;
+    width: 80%;
+    margin-bottom: 1rem;
+  }
+  
+  .empty-state h2 {
+    font-size: 2em;
+    margin: 0.5rem 0;
+  }
+  
+  .empty-state a {
+    color: #007BFF;
+    text-decoration: underline;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  #learnMore{
+    display: inline-flex;
+    align-items: center;
+  }
+  #learnMore img{
+    max-width: 30px;
+    min-width: 24px;
+  }
+
+  .itenary{
+    border: 1px solid none;
+    display: inline-flex;
+    flex-direction: row-reverse;
+    width: 60%;
+    justify-content: space-evenly;
+    margin-bottom: 0.4em;
+    align-items: center;
+
+
+}
+#collaborateTask,
+#shareTask{
+width: 20px;
+max-width: 40px;
+min-width: 20px;
+}
+
+.itenary img{
+    width: 20px;
+max-width: 40px;
+min-width: 20px;
 }
