@@ -89,12 +89,15 @@
       width: 80%;
       font-size: 1rem;
       height: 55px;
+      min-width: 90px;
     }
     a{
       width: 100%;
       justify-content: center;
       text-align: center;
       display: flex;
+      border: 1px solid none;
+      min-width: 120px;
     }
   }
   
