@@ -10,11 +10,11 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: radial-gradient(50% 50% at 50% 50%, #FFFFFF 0%, #90a3c7 92.13%), #AD000000;
+    background: radial-gradient(50% 50% at 50% 50%, #FFFFFF 0%, #7d95c0 92.13%), #ad00004d;
   }
   
   h2 {
-    font-size: 2.3rem;
+    font-size: 1.5rem;
     font-weight: lighter;
     font-style: italic;
   }
@@ -34,10 +34,27 @@
   }
   
   #bookmark {
-    width: 80%;
+    width: 15%;
     max-width: 270px;
     height: auto;
     margin: 1rem 0;
+    min-width: 50px;
+  }
+
+  header{
+    display: inline-flex;
+    flex-direction:row-reverse;
+    align-items: center;
+    width: 100%;
+    align-items:center ;
+    text-align: center;
+    justify-content: center;
+    justify-items: center;
+    gap: 2em;
+    border: 1px solid none;
+    margin-top: -1.5em;
+    flex-wrap: wrap-reverse;
+
   }
   
   #buttonContainer {
@@ -61,19 +78,16 @@
     color: white;
     width: 100%;
     max-width: 220px;
-    height: 60px;
+    height: 40px;
     font-size: 1.2rem;
-    border-radius: 23px;
+    border-radius: 8px;
     font-weight: 100;
     font-style: italic;
     cursor: pointer;
     gap: 0.5rem;
     transition: background 0.3s ease;
   }
-  a{
-    width: 45%;
-    text-decoration: none;
-  }
+  
   button img {
     width: 20px;
     height: 20px;
@@ -88,13 +102,7 @@
     button {
       width: 80%;
       font-size: 1rem;
-      height: 55px;
-    }
-    a{
-      width: 100%;
-      justify-content: center;
-      text-align: center;
-      display: flex;
+      height: 50px;
     }
   }
   
@@ -102,11 +110,16 @@
   #bg {
     width: 100%;
     padding: 2% 0;
-    background-color: #00000013;
+    background-color: #00000010;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+  }
+  a{
+    width: 35%;
+    text-decoration: none;
+    border: 1px solid none;
   }
 
   @keyframes borderColorCycle {
@@ -116,9 +129,46 @@
     75%  { border-color: #00BFFF; }
     100% { border-color: #341381; }
   }
-  button:hover{
+  
+  form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid none;
+    gap: 1em;
+  }
+  form input{
+    width: 100%;
+    height: 4em;
+    border-radius: 8px;
+    border: none;
+    padding-left: 1em;
+  }
+  hr{
+    border: 1px inset;
+    width: 90%;
+    text-align: center;
+    justify-self: center;
+    align-self: center;
+  }
+  .social{
+    border: 1px solid none;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content:space-around;
+    height: min-content;
+  }
+  .social img{
+    width: 15%;
+    max-width: 220px;
+    height: auto;
+    margin: 1rem 0;
+    cursor: pointer;
+  }
+  .social img:hover{
     transform: translateY(-2px);
-    transition-duration: 1s;
+    transition-duration: 0.5s;
     transition-timing-function: ease-in-out;
   }
-  
