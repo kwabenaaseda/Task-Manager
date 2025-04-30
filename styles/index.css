@@ -1,0 +1,114 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+  }
+  
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: radial-gradient(50% 50% at 50% 50%, #FFFFFF 0%, #717e96 92.13%), #AD000000;
+  }
+  
+  h2 {
+    font-size: 2.3rem;
+    font-weight: lighter;
+    font-style: italic;
+  }
+  
+  .card {
+    border: 5px solid #341381;
+    border-radius: 42px;
+    text-align: center;
+    background: #BDBDBD;
+    padding: 2rem;
+    line-height: 3rem;
+    box-shadow: 0px 4px 12px #0000006e;
+    width: 90%;
+    max-width: 500px;
+    
+  animation: borderColorCycle 5s linear infinite;
+  }
+  
+  #bookmark {
+    width: 80%;
+    max-width: 270px;
+    height: auto;
+    margin: 1rem 0;
+  }
+  
+  #buttonContainer {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: #8F3FF2;
+    color: white;
+    width: 100%;
+    max-width: 220px;
+    height: 60px;
+    font-size: 1.2rem;
+    border-radius: 23px;
+    font-weight: 100;
+    font-style: italic;
+    cursor: pointer;
+    gap: 0.5rem;
+    transition: background 0.3s ease;
+  }
+  
+  button img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  @media (max-width: 600px) {
+    #buttonContainer {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    button {
+      width: 80%;
+      font-size: 1rem;
+      height: 55px;
+    }
+  }
+  
+  
+  #bg {
+    width: 100%;
+    padding: 2% 0;
+    background-color: #00000028;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  a{
+    width: 45%;
+    text-decoration: none;
+  }
+
+  @keyframes borderColorCycle {
+    0%   { border-color: #341381; }
+    25%  { border-color: #8F3FF2; }
+    50%  { border-color: #FF6F61; }
+    75%  { border-color: #00BFFF; }
+    100% { border-color: #341381; }
+  }
+  
