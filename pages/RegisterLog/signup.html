@@ -6,13 +6,13 @@
 
   <!-- SEO Meta Tags -->
   <title>StackTasks -SignUp</title>
-  <meta name="description" content="Task Manager 1.0 is a simple and intuitive tool to manage your tasks efficiently.">
-  <meta name="keywords" content="task manager, productivity, to-do list, planner, sign up, log in">
+  <meta name="description" content="StackTasks is a simple and intuitive tool to manage your tasks efficiently.">
+  <meta name="keywords" content="StackTasks,task manager, productivity, to-do list, planner, sign up, log in">
   <meta name="author" content="Mensah Aseda Gibson">
   <meta name="robots" content="index, follow">
 
   <!-- Open Graph for Social Sharing -->
-  <meta property="og:title" content="Task Manager 1.0">
+  <meta property="og:title" content="StackTasks">
   <meta property="og:description" content="A lightweight task manager to simplify your productivity.">
   <meta property="og:image" content="/image/BookmarkBook.png">
   <meta property="og:type" content="website">
@@ -66,7 +66,13 @@
         error.textContent = "Passwords do not match.";
       } else {
         error.textContent = "";
+        if(email in sessionStorage){
+            error.textContent = "User Already Exists";
+}
+        else{ error.textContent = "";
+            sessionStorage.setItem(email,password)
         window.location.href = "/pages/user/homepage.html";
+}
       }
     });
   </script>
