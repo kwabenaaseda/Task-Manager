@@ -14,6 +14,15 @@ const overlay = document.getElementById("overlay");
 const closeBtn = document.getElementById("closeBtn");
 const darkModeToggle = document.getElementById("darkModeToggle");
 
+
+messageBtn.addEventListener("click",toggleMessagePopUp)
+
+function toggleMessagePopUp(){
+    messagePopup.classList.toggle("open");
+    messagePopup.classList.toggle("active");
+}
+
+
 // Show Modal
 [openBtn, addBtn].forEach(btn => {
   btn.addEventListener("click", () => {
@@ -43,14 +52,35 @@ taskForm.addEventListener("submit", (e) => {
   task.classList.add("task-item");
   task.innerHTML = `
     <strong>${name}</strong><br>
-    Priority: ${priority}<br>
-    Schedule: ${schedule || "Not Scheduled"}<br>
-    Description: ${desc}<br>
+    <span>Priority: ${priority}</span>
+    <br>
+    <span>Schedule: ${schedule || "Not Scheduled"}</span>
+    <br>
+   <span> Description: ${desc}</span>
+    <br>
     ${share ? "🔗 Shared" : ""} ${collaborate ? "🤝 Collaboration" : ""}
   `;
 
-  main.appendChild(task);
   
+  const urgent = document.createElement("div")
+  if(priority=="low"){
+    urgent.innerHTML='<img src="/image/green.png" class="flames"  alt="flame"/>'
+    task.appendChild(urgent)
+  }
+  else if(priority=="medium"){
+ urgent.innerHTML='<img src="/image/yellow.png" class="flames"  alt="flame"/>'
+ task.appendChild(urgent)
+  }
+  else if(priority=="high"){
+ urgent.innerHTML='<img src="/image/red.png" class="flames"  alt="flame"/>'
+ task.appendChild(urgent)
+  }
+  else if(priority=="undetermined") {
+    urgent.innerHTML='<img src="/image/black.png" class="flames"  alt="flame"/>'
+    task.appendChild(urgent)
+  }
+  main.appendChild(task);
+
   const emptyState = document.getElementById("emptyState");
   const tasks = document.querySelectorAll(".task-item");
   
@@ -94,16 +124,25 @@ function toggleSideMenu() {
 
 // Sidebar Navigation
 document.getElementById("ongoingTasksLink").addEventListener("click", () => {
+  window.location.href="/pages/user/homepage.html"
   toggleSideMenu();
 });
 
 document.getElementById("scheduledTasksLink").addEventListener("click", () => {
-  main.innerHTML = "<h3>Scheduled Tasks (Coming Soon)</h3>";
+  window.location.href="/pages/user/schedule.html"
   toggleSideMenu();
 });
 
 document.getElementById("previousTasksLink").addEventListener("click", () => {
-  main.innerHTML = "<h3>Previous Tasks (Coming Soon)</h3>";
+  window.location.href="/pages/user/previous.html"
+  toggleSideMenu();
+});
+document.getElementById("ProfileLink").addEventListener("click", () => {
+  window.location.href="/pages/admin/admin.html"
+  toggleSideMenu();
+});
+document.getElementById("SettingsLink").addEventListener("click", () => {
+  window.location.href="/pages/admin/settings.html"
   toggleSideMenu();
 });
 
@@ -164,9 +203,8 @@ darkToggleBtn.addEventListener("click", () => {
 
 for (let i = 1; i < localStorage.length; i++) {
     var reciept=localStorage.getItem(i)
-    console.log(reciept.indexOf(`Priority`))
     let transmitter={
-        "name":reciept.slice(0,reciept.indexOf(`Priority`)),
+        "name":reciept.slice(0,reciept.indexOf("Priority")),
         "priority":reciept.slice(reciept.indexOf("Priority"),reciept.indexOf("Schedule")),
         "schedule":reciept.slice(reciept.indexOf("Schedule"),reciept.indexOf("Description")),
         "description":reciept.slice(reciept.indexOf("Description"),reciept.indexOf("Share")),
@@ -178,35 +216,56 @@ for (let i = 1; i < localStorage.length; i++) {
     const task = document.createElement("div");
   task.classList.add("task-item");
     task.innerHTML = `
-    <strong>${transmitter.name}</strong><br>
-     ${transmitter.priority}<br>
-    ${transmitter.schedule}<br>
-    ${transmitter.description}<br>
-    ${transmitter.share}<br>
-    ${transmitter.collab}<br>
+    <strong id="name">${transmitter.name}</strong><br>
+     <span>${transmitter.priority}</span>
+     <br>
+    <span>${transmitter.schedule}</span>
+    <br>
+    <span>${transmitter.description}</span>
+    <br>
+    🔗${transmitter.share}
+    <br>
+    🤝${transmitter.collab}
   `;
+  const urgent = document.createElement("div")
+  if(transmitter.priority=="Priority:low "){
+    urgent.innerHTML='<img src="/image/green.png" class="flames"  alt="flame"/>'
+    task.appendChild(urgent)
+    console.log("low")
+  }
+  else if(transmitter.priority=="Priority:medium "){
+ urgent.innerHTML='<img src="/image/yellow.png" class="flames"  alt="flame"/>'
+ task.appendChild(urgent)
+ console.log("med")
+  }
+  else if(transmitter.priority=="Priority:high "){
+ urgent.innerHTML='<div class="flame-container"><img src="/image/red.png" class="flames"  alt="flame"/></div>'
+ task.appendChild(urgent)
+ console.log("high")
+  }
+  else if(transmitter.priority=="Priority:undertermined ") {
+    urgent.innerHTML='<img src="/image/black.png" class="flames"  alt="flame" alt="flame"/>'
+    task.appendChild(urgent)
+    console.log("dunno")
+  }
+  else{
+    urgent.innerHTML='<img src="/image/black.png" class="flames"  alt="flame" alt="flame"/>'
+    task.appendChild(urgent)
+  }
+
     console.log(task)
     main.append(task)
 }
 
 const emptyState = document.getElementById("emptyState");
-const tasks = document.querySelectorAll(".task-item");
+const tasks = document.querySelectorAll(".task-item")
 
+console.log(tasks)
+console.log(tasks.length<1)
 
-
-    if (tasks.length > 0) {
-        emptyState.style.display = "none";
-      } 
-      else{
-        emptyState.style.display = "flex";
-      }
-
+if (tasks.length>0){
+  emptyState.style.display="none"
+}
 
 console.log(localStorage.length)
 
-messageBtn.addEventListener("click",toggleMessagePopUp)
-
-function toggleMessagePopUp(){
-    messagePopup.classList.toggle("open");
-    messagePopup.classList.toggle("active");
-}
