@@ -433,8 +433,6 @@ max-width: 40px;
 min-width: 20px;
 }
 .flame-container {
-   transform: translateY(-9rem)translateX(30rem);
-   position: fixed;
     padding: 1rem;
     z-index: 100;
   }
@@ -477,8 +475,6 @@ min-width: 20px;
   /* Responsive flame position */
   @media screen and (max-width: 600px) {
     .flame-container {
-        transform: translateY(-9rem)translateX(12rem);
-        position: fixed;
          padding: 1rem;
          z-index: 100;
     }

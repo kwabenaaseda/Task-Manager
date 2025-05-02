@@ -66,11 +66,11 @@
         error.textContent = "Passwords do not match.";
       } else {
         error.textContent = "";
-        if(email in sessionStorage){
+        if(email in localStorage){
             error.textContent = "User Already Exists";
 }
         else{ error.textContent = "";
-            sessionStorage.setItem(email,password)
+            localStorage.setItem(email,password)
         window.location.href = "/pages/user/homepage.html";
 }
       }

@@ -70,8 +70,8 @@
         
       }
 
-     if(email in sessionStorage){
-      if (sessionStorage.getItem(email)==password){
+     if(email in localStorage){
+      if (localStorage.getItem(email)==password){
         // Redirect on success
         window.location.href = "/pages/user/homepage.html";
       }

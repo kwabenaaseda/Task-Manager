@@ -1,11 +1,11 @@
 const openBtn = document.getElementById("openBtn");
-const addBtn = document.getElementById("addBtn"); // support floating add button
+const addBtn = document.getElementById("addBtn");
 const taskModal = document.getElementById("taskModal");
 const taskModalOverlay = document.getElementById("taskModalOverlay");
 const taskForm = document.getElementById("taskForm");
 const main = document.getElementById("main");
-const messageBtn = document.getElementById("messageBtn")
-const messagePopup= document.getElementById("messagePopup")
+const messageBtn = document.getElementById("messageBtn");
+const messagePopup = document.getElementById("messagePopup");
 
 // Sidebar elements
 const menuToggleBtn = document.getElementById("menuToggleBtn");
@@ -14,17 +14,16 @@ const overlay = document.getElementById("overlay");
 const closeBtn = document.getElementById("closeBtn");
 const darkModeToggle = document.getElementById("darkModeToggle");
 
+// Message popup toggle
+messageBtn.addEventListener("click", toggleMessagePopUp);
 
-messageBtn.addEventListener("click",toggleMessagePopUp)
-
-function toggleMessagePopUp(){
-    messagePopup.classList.toggle("open");
-    messagePopup.classList.toggle("active");
+function toggleMessagePopUp() {
+  messagePopup.classList.toggle("open");
+  messagePopup.classList.toggle("active");
 }
 
-
 // Show Modal
-[openBtn, addBtn].forEach(btn => {
+[openBtn, addBtn].forEach((btn) => {
   btn.addEventListener("click", () => {
     taskModal.style.display = "block";
     taskModalOverlay.style.display = "block";
@@ -52,64 +51,50 @@ taskForm.addEventListener("submit", (e) => {
   task.classList.add("task-item");
   task.innerHTML = `
     <strong>${name}</strong><br>
-    <span>Priority: ${priority}</span>
-    <br>
-    <span>Schedule: ${schedule || "Not Scheduled"}</span>
-    <br>
-   <span> Description: ${desc}</span>
-    <br>
+    <span>Priority: ${priority}</span><br>
+    <span>Schedule: ${schedule || "Not Scheduled"}</span><br>
+    <span>Description: ${desc}</span><br>
     ${share ? "🔗 Shared" : ""} ${collaborate ? "🤝 Collaboration" : ""}
   `;
 
-  
-  const urgent = document.createElement("div")
-  if(priority=="low"){
-    urgent.innerHTML='<img src="/image/green.png" class="flames"  alt="flame"/>'
-    task.appendChild(urgent)
-  }
-  else if(priority=="medium"){
- urgent.innerHTML='<img src="/image/yellow.png" class="flames"  alt="flame"/>'
- task.appendChild(urgent)
-  }
-  else if(priority=="high"){
- urgent.innerHTML='<img src="/image/red.png" class="flames"  alt="flame"/>'
- task.appendChild(urgent)
-  }
-  else if(priority=="undetermined") {
-    urgent.innerHTML='<img src="/image/black.png" class="flames"  alt="flame"/>'
-    task.appendChild(urgent)
-  }
+  const urgent = document.createElement("div");
+  const priorityIcons = {
+    low: "/image/green.png",
+    medium: "/image/yellow.png",
+    high: "/image/red.png",
+    undetermined: "/image/black.png"
+  };
+
+  urgent.innerHTML = `<img src="${priorityIcons[priority]}" class="flames" alt="flame" />`;
+  task.appendChild(urgent);
+
   main.appendChild(task);
 
+  // Handle empty state visibility
   const emptyState = document.getElementById("emptyState");
   const tasks = document.querySelectorAll(".task-item");
-  
-  
-  
-      if (tasks.length > 0) {
-          emptyState.style.display = "none";
-        } 
-        else{
-          emptyState.style.display = "flex";
-        }
-  
+  emptyState.style.display = tasks.length > 0 ? "none" : "flex";
+
+  // Store task data in localStorage
+  const taskData = {
+    name,
+    priority,
+    schedule,
+    description: desc,
+    share,
+    collab: collaborate
+  };
+
+  // Store it in localStorage by the task count
+  let taskCount = localStorage.getItem('taskCount');
+  taskCount = taskCount ? parseInt(taskCount) : 0; // Initialize task count if it's null
+  localStorage.setItem(`task-${taskCount}`, JSON.stringify(taskData)); // Store the task data
+  localStorage.setItem('taskCount', taskCount + 1); // Increment the task count
 
   // Close modal
   taskModal.style.display = "none";
   taskModalOverlay.style.display = "none";
   taskForm.reset();
-  var reference = {
-    "name":name,
-    "priority":priority,
-    "schedule":schedule,
-    "description":desc,
-    "share":share,
-    "collab":collaborate
-  }
-  var store = main.children.length-1;
-  console.log(store)
-  console.log(reference)
-  localStorage.setItem(store,`${reference.name} Priority:${reference.priority} Schedule:${reference.schedule||"Not Scheduled"} Description:${reference.description} ${`Share: ${reference.share}`||""} ${`Collab: ${reference.collab}`||""}`)
 });
 
 // Side Menu Handlers
@@ -124,148 +109,84 @@ function toggleSideMenu() {
 
 // Sidebar Navigation
 document.getElementById("ongoingTasksLink").addEventListener("click", () => {
-  window.location.href="/pages/user/homepage.html"
+  window.location.href = "/pages/user/homepage.html";
   toggleSideMenu();
 });
 
 document.getElementById("scheduledTasksLink").addEventListener("click", () => {
-  window.location.href="/pages/user/schedule.html"
+  window.location.href = "/pages/user/schedule.html";
   toggleSideMenu();
 });
 
 document.getElementById("previousTasksLink").addEventListener("click", () => {
-  window.location.href="/pages/user/previous.html"
+  window.location.href = "/pages/user/previous.html";
   toggleSideMenu();
 });
+
 document.getElementById("ProfileLink").addEventListener("click", () => {
-  window.location.href="/pages/admin/admin.html"
+  window.location.href = "/pages/admin/admin.html";
   toggleSideMenu();
 });
+
 document.getElementById("SettingsLink").addEventListener("click", () => {
-  window.location.href="/pages/admin/settings.html"
+  window.location.href = "/pages/admin/settings.html";
   toggleSideMenu();
 });
 
 // Dark Mode Toggle
 darkModeToggle.addEventListener("click", () => {
   document.body.classList.toggle("dark-mode");
-});
-// Elements
-// Elements
-const userBtn = document.getElementById("userBtn");
-
-// Function to set user status (Online or Offline)
-function setUserStatus(isOnline) {
-    if (isOnline) {
-        userBtn.classList.add("online");
-        userBtn.classList.remove("offline");
-    } else {
-        userBtn.classList.add("offline");
-        userBtn.classList.remove("online");
-    }
-}
-
-// Example usage: Toggle user status every 3 seconds
-let isOnline = true;  // Start with user being online
-setInterval(() => {
-    isOnline = !isOnline;  // Toggle the status
-    setUserStatus(isOnline);
-}, 3000);  // Change every 3 seconds (you can adjust this timing)
-
-const darkToggleBtn = document.getElementById("darkModeToggle");
-
-function updateMode() {
-  if (document.body.classList.contains("dark-mode")) {
-    darkToggleBtn.textContent = "☀️ Light Mode"; // Light mode icon
-  } else {
-    darkToggleBtn.textContent = "🌓 Dark Mode"; // Dark mode icon
-  }
-}
-
-darkToggleBtn.addEventListener("click", () => {
-  document.body.classList.toggle("dark-mode");
+  localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
   updateMode();
 });
 
-// Optional: Remember preference
+function updateMode() {
+  darkModeToggle.textContent = document.body.classList.contains("dark-mode") ? "☀️ Light Mode" : "🌓 Dark Mode";
+}
+
 window.addEventListener("DOMContentLoaded", () => {
   if (localStorage.getItem("theme") === "dark") {
     document.body.classList.add("dark-mode");
   }
   updateMode();
-});
 
-darkToggleBtn.addEventListener("click", () => {
-  const isDark = document.body.classList.toggle("dark-mode");
-  localStorage.setItem("theme", isDark ? "dark" : "light");
-  updateMode();
-});
+  // Load tasks from localStorage on page load
+  const taskCount = localStorage.getItem('taskCount') || 0;
+  for (let i = 0; i < taskCount; i++) {
+    const taskData = JSON.parse(localStorage.getItem(`task-${i}`));
+    if (taskData) {
+      const task = document.createElement("div");
+      task.classList.add("task-item");
+      task.innerHTML = `
+        <strong>${taskData.name}</strong><br>
+        <span>Priority: ${taskData.priority}</span><br>
+        <span>Schedule: ${taskData.schedule || "Not Scheduled"}</span><br>
+        <span>Description: ${taskData.description}</span><br>
+        ${taskData.share ? "🔗 Shared" : ""} ${taskData.collab ? "🤝 Collaboration" : ""}
+      `;
 
-for (let i = 1; i < localStorage.length; i++) {
-    var reciept=localStorage.getItem(i)
-    let transmitter={
-        "name":reciept.slice(0,reciept.indexOf("Priority")),
-        "priority":reciept.slice(reciept.indexOf("Priority"),reciept.indexOf("Schedule")),
-        "schedule":reciept.slice(reciept.indexOf("Schedule"),reciept.indexOf("Description")),
-        "description":reciept.slice(reciept.indexOf("Description"),reciept.indexOf("Share")),
-        "share":reciept.slice(reciept.indexOf("Share"),reciept.indexOf("Collab")),
-        "collab":reciept.slice(reciept.indexOf("Collab"))
+      const urgent = document.createElement("div");
+      const priorityIcons = {
+        low: "/image/green.png",
+        medium: "/image/yellow.png",
+        high: "/image/red.png",
+        undetermined: "/image/black.png"
+      };
+
+      urgent.innerHTML = `<img src="${priorityIcons[taskData.priority]}" class="flames" alt="flame" />`;
+      task.appendChild(urgent);
+
+      main.appendChild(task);
     }
-    console.log(reciept)
-    console.log(transmitter)
-    const task = document.createElement("div");
-  task.classList.add("task-item");
-    task.innerHTML = `
-    <strong id="name">${transmitter.name}</strong><br>
-     <span>${transmitter.priority}</span>
-     <br>
-    <span>${transmitter.schedule}</span>
-    <br>
-    <span>${transmitter.description}</span>
-    <br>
-    🔗${transmitter.share}
-    <br>
-    🤝${transmitter.collab}
-  `;
-  const urgent = document.createElement("div")
-  if(transmitter.priority=="Priority:low "){
-    urgent.innerHTML='<img src="/image/green.png" class="flames"  alt="flame"/>'
-    task.appendChild(urgent)
-    console.log("low")
-  }
-  else if(transmitter.priority=="Priority:medium "){
- urgent.innerHTML='<img src="/image/yellow.png" class="flames"  alt="flame"/>'
- task.appendChild(urgent)
- console.log("med")
-  }
-  else if(transmitter.priority=="Priority:high "){
- urgent.innerHTML='<div class="flame-container"><img src="/image/red.png" class="flames"  alt="flame"/></div>'
- task.appendChild(urgent)
- console.log("high")
-  }
-  else if(transmitter.priority=="Priority:undertermined ") {
-    urgent.innerHTML='<img src="/image/black.png" class="flames"  alt="flame" alt="flame"/>'
-    task.appendChild(urgent)
-    console.log("dunno")
-  }
-  else{
-    urgent.innerHTML='<img src="/image/black.png" class="flames"  alt="flame" alt="flame"/>'
-    task.appendChild(urgent)
   }
 
-    console.log(task)
-    main.append(task)
-}
+  // Hide the empty state if tasks are available
+  const emptyState = document.getElementById("emptyState");
+  const tasks = document.querySelectorAll(".task-item");
+  emptyState.style.display = tasks.length > 0 ? "none" : "flex";
+});
 
+// Check tasks length to toggle empty state visibility
 const emptyState = document.getElementById("emptyState");
-const tasks = document.querySelectorAll(".task-item")
-
-console.log(tasks)
-console.log(tasks.length<1)
-
-if (tasks.length>0){
-  emptyState.style.display="none"
-}
-
-console.log(localStorage.length)
-
+const tasks = document.querySelectorAll(".task-item");
+emptyState.style.display = tasks.length > 0 ? "none" : "flex";
