@@ -32,7 +32,7 @@
   <!-- Task Entry Modal -->
   <div class="task-modal-overlay" id="taskModalOverlay"></div>
   <div class="task-modal" id="taskModal">
-    <h2>Add New Task</h2>
+    <h2 id="HeaderTask">Add New Task</h2>
     <form id="taskForm">
       <input type="text" id="taskName" placeholder="Task Name" required />
       <select id="taskPriority">
@@ -45,7 +45,7 @@
       <textarea id="taskDesc" placeholder="Task Description"></textarea>
       <label class="itenary"><input type="checkbox" id="shareTask" /> Share Task<img src="/image/github-removebg-preview.png" alt="share"></label>
       <label class="itenary"><input type="checkbox" id="collaborateTask" />Collaborate<img src="/image/PlusAdd.png" alt="collab"></label>
-      <button type="submit">Add Task</button>
+      <button type="submit" id="Submit Task">Add Task</button>
     </form>
   </div>
 
@@ -62,8 +62,8 @@
   <!--Delete Task Confimation-->
   <div id="CONFIRMDELETE">
     <h3>Are You Sure ?</h3>
-    <button class="ConfirmBtn" id="confirm" >Confirm</button>
-    <button class="Returnbtn" id="return" >Return</button>
+    <button class="ConfirmBtn" id="confirm" onclick="actualDelete()">Confirm</button>
+    <button class="Returnbtn" id="return" onclick="Delete()">Return</button>
   </div>
   <!--Update Task Modal-->
 

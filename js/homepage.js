@@ -14,6 +14,7 @@ const overlay = document.getElementById("overlay");
 const closeBtn = document.getElementById("closeBtn");
 const darkModeToggle = document.getElementById("darkModeToggle");
 
+
 // Message popup toggle
 messageBtn.addEventListener("click", toggleMessagePopUp);
 
@@ -27,6 +28,12 @@ function toggleMessagePopUp() {
   btn.addEventListener("click", () => {
     taskModal.style.display = "block";
     taskModalOverlay.style.display = "block";
+    const headerTask = document.getElementById("HeaderTask")
+    const SubmitTask = document.getElementById("Submit Task")
+  
+    headerTask.textContent="ADD TASK"
+  SubmitTask.textContent="ADD"
+  
   });
 });
 
@@ -134,6 +141,130 @@ taskForm.addEventListener("submit", (e) => {
   taskForm.reset();
 });
 
+       //Call Objects
+ const Container = document.getElementById("CONFIRMDELETE")
+       /* const Return = document.getElementById("return");
+       const Confirm = document.getElementById("confirm"); */
+function Delete(event) {
+  const taskDiv = event.target.closest('.task-item');
+  const taskClass = event.target.className;
+
+  // Remove from DOM
+  taskDiv.remove();
+
+  // Remove from localStorage
+  localStorage.removeItem(taskClass);
+
+  // Update empty state visibility
+  const tasks = document.querySelectorAll(".task-item");
+  const emptyState = document.getElementById("emptyState");
+  emptyState.style.display = tasks.length > 0 ? "none" : "flex";
+}
+
+function Update(event) {
+  const taskDiv = event.target.closest('.task-item');
+  const taskClass = event.target.className;
+  const taskData = JSON.parse(localStorage.getItem(taskClass));
+
+  if (!taskData) return;
+
+  // Prefill form with existing task data
+  document.getElementById("taskName").value = taskData.name;
+  document.getElementById("taskPriority").value = taskData.priority;
+  document.getElementById("taskSchedule").value = taskData.schedule;
+  document.getElementById("taskDesc").value = taskData.description;
+  document.getElementById("shareTask").checked = taskData.share;
+  document.getElementById("collaborateTask").checked = taskData.collab;
+  
+  const headerTask = document.getElementById("HeaderTask")
+  const SubmitTask = document.getElementById("Submit Task")
+
+  // Show modal
+  taskModal.style.display = "block";
+  taskModalOverlay.style.display = "block";
+  headerTask.textContent="UPDATE TASK"
+  SubmitTask.textContent="UPDATE"
+  
+  // Update task on submit
+  taskForm.onsubmit = (e) => {
+    e.preventDefault();
+    Delete(event)
+
+    // Get new values
+    const updatedData = {
+      name: document.getElementById("taskName").value,
+      priority: document.getElementById("taskPriority").value,
+      schedule: document.getElementById("taskSchedule").value,
+      description: document.getElementById("taskDesc").value,
+      share: document.getElementById("shareTask").checked,
+      collab: document.getElementById("collaborateTask").checked
+    };
+
+    // Save to localStorage    
+    localStorage.setItem(taskClass, JSON.stringify(updatedData));
+
+    // Re-render the task
+    taskDiv.innerHTML = `
+      <strong>${updatedData.name}</strong><br>
+      <span>Priority: ${updatedData.priority}</span><br>
+      <span>Schedule: ${updatedData.schedule || "Not Scheduled"}</span><br>
+      <span>Description: ${updatedData.description}</span><br>
+      ${updatedData.share ? "🔗 Shared" : ""} ${updatedData.collab ? "🤝 Collaboration" : ""}
+    `;
+
+    const urgent = document.createElement("div");
+    const priorityIcons = {
+      low: "/image/green.png",
+      medium: "/image/yellow.png",
+      high: "/image/red.png",
+      undetermined: "/image/black.png"
+    };
+    urgent.innerHTML = `<img src="${priorityIcons[updatedData.priority]}" class="flames" alt="flame" />`;
+    taskDiv.appendChild(urgent);
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "🗑";
+    deleteBtn.className = taskClass;
+    deleteBtn.addEventListener("click", Delete);
+
+    const updateBtn = document.createElement("button");
+    updateBtn.textContent = "🖋";
+    updateBtn.className = taskClass;
+    updateBtn.addEventListener("click", Update);
+
+    const completeBtn = document.createElement("button");
+    completeBtn.textContent = "✅";
+    completeBtn.className = taskClass;
+    completeBtn.addEventListener("click", () => {
+      completeBtn.textContent = completeBtn.textContent === "✅" ? "✔" : "✅";
+    });
+
+    const funcContainer = document.createElement("div");
+    funcContainer.className = "function";
+    funcContainer.style.border = "none";
+    funcContainer.appendChild(completeBtn);
+    funcContainer.appendChild(updateBtn);
+    funcContainer.appendChild(deleteBtn);
+
+    taskDiv.appendChild(funcContainer);
+
+    // Close modal
+    taskModal.style.display = "none";
+    taskModalOverlay.style.display = "none";
+    taskForm.reset();
+
+    // Restore default submit behavior
+    taskForm.onsubmit = null;
+    localStorage.setItem("reloadAgain", "true");
+    location.reload(); // First reload
+    
+  };
+}
+
+ function Complete(){
+        alert("Working")
+       }  
+      
 // Side Menu Handlers
 menuToggleBtn.addEventListener("click", toggleSideMenu);
 overlay.addEventListener("click", toggleSideMenu);
@@ -191,7 +322,17 @@ window.addEventListener("DOMContentLoaded", () => {
   const taskCount = localStorage.getItem('taskCount') || 0;
   for (let i = 0; i < taskCount; i++) {
     const taskData = JSON.parse(localStorage.getItem(`task-${i}`));
+   
+    
     if (taskData) {
+      console.log(taskData.name)
+      if (taskData.name === "") {
+        localStorage.removeItem(`task-${i}`);
+        taskDiv.remove(); // Make sure this refers to the actual task DOM element
+        location.reload(); // This alone reloads the page
+        return;
+      }
+      
       const task = document.createElement("div");
       task.classList.add("task-item");
       task.innerHTML = `
@@ -252,36 +393,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
       main.appendChild(task);
       console.log(deleteBtn.className)
-
-       //Call Objects
- const Container = document.getElementById("CONFIRMDELETE")
- const Return = document.getElementById("return");
- const Confirm = document.getElementById("confirm");
- 
- Return.addEventListener("click",Delete)
- Confirm.addEventListener("click",actualDelete)
- function Delete(){
- 
- if ( Container.style.display=="none"){
-   Container.style.display="block";
- }else{ Container.style.display="none";}
- 
- }
- function actualDelete(button){
-  button
-   console.log(deleteBtn)
- }
- function Update(){
-   alert("updated with me")
- }
- function Complete(){
-   alert("comple with me")
- }
+      
+  
     }
   }
 
 
-  
 
   // Hide the empty state if tasks are available
   const emptyState = document.getElementById("emptyState");
@@ -294,6 +411,10 @@ const emptyState = document.getElementById("emptyState");
 const tasks = document.querySelectorAll(".task-item");
 emptyState.style.display = tasks.length > 0 ? "none" : "flex";
 
-
-
+setTimeout(() => {
+  if (localStorage.getItem("reloadAgain") === "true") {
+    localStorage.removeItem("reloadAgain");
+    location.reload(); // Second reload
+  }
+}, 1); // delay in milliseconds (500ms = 0.5s, you can adjust as needed)
 
