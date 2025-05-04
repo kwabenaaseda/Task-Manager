@@ -2,6 +2,7 @@
     list-style: none;
 }
 
+
 :root { 
     --bg-light: #ffffff;
     --bg-dark: #1e1e1e;
@@ -38,7 +39,9 @@ body {
     min-height: 100vh;
     color:#f0f0f0;
     transition: background-color 0.3s ease, color 0.3s ease;
-    overflow-y: hidden;
+    overflow-y: auto;
+-webkit-overflow-scrolling: touch; /* enables smooth scrolling on iOS */
+
 }
 
 /* Sidebar */
