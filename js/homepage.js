@@ -372,9 +372,9 @@ window.addEventListener("DOMContentLoaded", () => {
       CompletedBtn.textContent="✅"
       //Function Calls
       CompletedBtn.addEventListener("click",()=>{
-        if (CompletedBtn.textContent=="✅"){
+        if (CompletedBtn.textContent==="✅"){
           CompletedBtn.textContent="✔"
-        }else if (CompletedBtn.textContent=="✔"){
+        }else if (CompletedBtn.textContent==="✔"){
           CompletedBtn.textContent="✅"
         }
       })
@@ -478,4 +478,38 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/service-worker.js')
     .then(reg => console.log('Service Worker registered:', reg))
     .catch(err => console.error('Service Worker registration failed:', err));
+}
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js').then(registration => {
+    console.log('Service Worker registered with scope:', registration.scope);
+
+    // Listen for updates
+    registration.addEventListener('updatefound', () => {
+      const newWorker = registration.installing;
+      newWorker.addEventListener('statechange', () => {
+        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+          // New version ready
+          showUpdateBanner();
+        }
+      });
+    });
+  });
+}
+
+// Simple update banner
+function showUpdateBanner() {
+  const banner = document.createElement('div');
+  banner.innerText = 'New version available. Click to refresh!';
+  banner.style.position = 'fixed';
+  banner.style.bottom = '0';
+  banner.style.left = '0';
+  banner.style.right = '0';
+  banner.style.background = '#222';
+  banner.style.color = '#fff';
+  banner.style.padding = '15px';
+  banner.style.textAlign = 'center';
+  banner.style.zIndex = '10000';
+  banner.style.cursor = 'pointer';
+  banner.onclick = () => window.location.reload(true);
+  document.body.appendChild(banner);
 }
