@@ -261,8 +261,10 @@ function Update(event) {
   };
 }
 
- function Complete(){
-        alert("Working")
+ function Complete(event){
+  const taskClass = event.target.className;
+  const Body =document.getElementById(taskClass)
+  Body.style.borderLeftColor="red";
        }  
       
 // Side Menu Handlers
