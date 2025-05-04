@@ -418,3 +418,64 @@ setTimeout(() => {
   }
 }, 1); // delay in milliseconds (500ms = 0.5s, you can adjust as needed)
 
+
+// Toggle visibility of share buttons based on checkbox
+const shareToggle = document.getElementById('shareTask');
+const shareButtons = document.getElementById('shareButtons');
+
+shareToggle?.addEventListener('change', () => {
+  if (shareToggle.checked) {
+    shareButtons.style.display = 'flex'; // or 'block' if you want vertical
+  } else {
+    shareButtons.style.display = 'none';
+  }
+});
+
+// SHARE FUNCTIONALITY
+
+const shareMailBtn = document.getElementById('shareMail');
+const shareWhatsAppBtn = document.getElementById('shareWhatsApp');
+const shareFacebookBtn = document.getElementById('shareFacebook');
+
+// Helper: Get current form values
+function getTaskDataFromForm() {
+  return {
+    name: document.getElementById("taskName").value,
+    priority: document.getElementById("taskPriority").value,
+    schedule: document.getElementById("taskSchedule").value,
+    description: document.getElementById("taskDesc").value,
+  };
+}
+
+// Helper: Format message
+function generateShareableText(taskData) {
+  return `Check out this task!\n\nName: ${taskData.name}\nPriority: ${taskData.priority}\nSchedule: ${taskData.schedule || "Not Scheduled"}\nDescription: ${taskData.description}`;
+}
+
+// Email share
+shareMailBtn?.addEventListener('click', () => {
+  const task = getTaskDataFromForm();
+  const subject = `Task: ${task.name}`;
+  const body = generateShareableText(task);
+  window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+});
+
+// WhatsApp share
+shareWhatsAppBtn?.addEventListener('click', () => {
+  const task = getTaskDataFromForm();
+  const text = generateShareableText(task);
+  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+});
+
+// Facebook share
+shareFacebookBtn?.addEventListener('click', () => {
+  const task = getTaskDataFromForm();
+  const text = generateShareableText(task);
+  const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://yourwebsite.com')}&quote=${encodeURIComponent(text)}`;
+  window.open(url, '_blank');
+});
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+    .then(reg => console.log('Service Worker registered:', reg))
+    .catch(err => console.error('Service Worker registration failed:', err));
+}

@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>StackTasks</title>
+  <link rel="manifest" href="/manifest.json" />
+<meta name="theme-color" content="#317EFB"/>
+
   <link rel="stylesheet" href="/styles/homepage.css" />
   <link rel="icon" href="/image/BookmarkBook.png" type="image/x-icon">
 </head>
@@ -45,6 +48,22 @@
       <textarea id="taskDesc" placeholder="Task Description"></textarea>
       <label class="itenary"><input type="checkbox" id="shareTask" /> Share Task<img src="/image/github-removebg-preview.png" alt="share"></label>
       <label class="itenary"><input type="checkbox" id="collaborateTask" />Collaborate<img src="/image/PlusAdd.png" alt="collab"></label>
+      <!-- Share buttons -->
+<!-- Share buttons (initially hidden) -->
+<div id="shareButtons" style="margin-top: 1rem; display: none; gap: 1rem;">
+  <button class="share-btn" id="shareMail" title="Share via Email">
+    <img src="/image/emaillogo.png" alt="Email" style="width:20px; vertical-align:middle;" /> Email
+  </button>
+  <button class="share-btn" id="shareWhatsApp" title="Share via WhatsApp">
+    <img src="/image/whatsapp logo.png" alt="WhatsApp" style="width:20px; vertical-align:middle;" /> WhatsApp
+  </button>
+  <button class="share-btn" id="shareFacebook" title="Share via Facebook">
+    <img src="/image/facebooklogo.png" alt="Facebook" style="width:20px; vertical-align:middle;" /> Facebook
+  </button>
+</div>
+
+
+      
       <button type="submit" id="Submit Task">Add Task</button>
     </form>
   </div>
