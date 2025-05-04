@@ -68,6 +68,42 @@ taskForm.addEventListener("submit", (e) => {
   urgent.innerHTML = `<img src="${priorityIcons[priority]}" class="flames" alt="flame" />`;
   task.appendChild(urgent);
 
+  const deleteBtn = document.createElement("button");
+  deleteBtn.value="delete";
+  deleteBtn.id="deleteBtn";
+  deleteBtn.addEventListener("click",Delete)
+  const UpdateBtn = document.createElement("button");
+  UpdateBtn.value="update";
+  UpdateBtn.id="updateBtn";
+  UpdateBtn.addEventListener("click",Update)
+  const CompletedBtn = document.createElement("button");
+  CompletedBtn.value="complete";
+  CompletedBtn.id="completeBtn";
+  CompletedBtn.addEventListener("click",Complete)
+
+  deleteBtn.textContent="🗑"
+  UpdateBtn.textContent="🖋"
+  CompletedBtn.textContent="✅"
+  //Function Calls
+  CompletedBtn.addEventListener("click",()=>{
+    if (CompletedBtn.textContent="✅"){
+      CompletedBtn.textContent="✔"
+    }else{
+      CompletedBtn.textContent="✅"
+    }
+  })
+ 
+  //Functions
+
+  const ContainerFunction=document.createElement("div");
+  ContainerFunction.className="function"
+  ContainerFunction.appendChild(CompletedBtn)
+  ContainerFunction.appendChild(UpdateBtn)
+  ContainerFunction.appendChild(deleteBtn)
+  ContainerFunction.style.border="none"
+
+  task.appendChild(ContainerFunction)
+
   main.appendChild(task);
 
   // Handle empty state visibility
@@ -90,6 +126,7 @@ taskForm.addEventListener("submit", (e) => {
   taskCount = taskCount ? parseInt(taskCount) : 0; // Initialize task count if it's null
   localStorage.setItem(`task-${taskCount}`, JSON.stringify(taskData)); // Store the task data
   localStorage.setItem('taskCount', taskCount + 1); // Increment the task count
+  deleteBtn.className= UpdateBtn.className= CompletedBtn.className=`task-${taskCount}`
 
   // Close modal
   taskModal.style.display = "none";
@@ -175,10 +212,76 @@ window.addEventListener("DOMContentLoaded", () => {
 
       urgent.innerHTML = `<img src="${priorityIcons[taskData.priority]}" class="flames" alt="flame" />`;
       task.appendChild(urgent);
+      // Delete, update and Completed buttons
+      const deleteBtn = document.createElement("button");
+      deleteBtn.value="delete";
+      deleteBtn.id="deleteBtn";
+      deleteBtn.addEventListener("click",Delete)
+      const UpdateBtn = document.createElement("button");
+      UpdateBtn.value="update";
+      UpdateBtn.id="updateBtn";
+      UpdateBtn.addEventListener("click",Update)
+      const CompletedBtn = document.createElement("button");
+      CompletedBtn.value="complete";
+      CompletedBtn.id="completeBtn";
+      CompletedBtn.addEventListener("click",Complete)
+      deleteBtn.className= UpdateBtn.className= CompletedBtn.className=`task-${i}`
+      deleteBtn.textContent="🗑"
+      UpdateBtn.textContent="🖋"
+      CompletedBtn.textContent="✅"
+      //Function Calls
+      CompletedBtn.addEventListener("click",()=>{
+        if (CompletedBtn.textContent=="✅"){
+          CompletedBtn.textContent="✔"
+        }else if (CompletedBtn.textContent=="✔"){
+          CompletedBtn.textContent="✅"
+        }
+      })
+     
+      //Functions
+
+      const ContainerFunction=document.createElement("div");
+      ContainerFunction.className="function"
+      ContainerFunction.appendChild(CompletedBtn)
+      ContainerFunction.appendChild(UpdateBtn)
+      ContainerFunction.appendChild(deleteBtn)
+      ContainerFunction.style.border="none"
+
+      task.appendChild(ContainerFunction)
+
 
       main.appendChild(task);
+      console.log(deleteBtn.className)
+
+       //Call Objects
+ const Container = document.getElementById("CONFIRMDELETE")
+ const Return = document.getElementById("return");
+ const Confirm = document.getElementById("confirm");
+ 
+ Return.addEventListener("click",Delete)
+ Confirm.addEventListener("click",actualDelete)
+ function Delete(){
+ 
+ if ( Container.style.display=="none"){
+   Container.style.display="block";
+ }else{ Container.style.display="none";}
+ 
+ }
+ function actualDelete(button){
+  button
+   console.log(deleteBtn)
+ }
+ function Update(){
+   alert("updated with me")
+ }
+ function Complete(){
+   alert("comple with me")
+ }
     }
   }
+
+
+  
 
   // Hide the empty state if tasks are available
   const emptyState = document.getElementById("emptyState");
@@ -190,3 +293,7 @@ window.addEventListener("DOMContentLoaded", () => {
 const emptyState = document.getElementById("emptyState");
 const tasks = document.querySelectorAll(".task-item");
 emptyState.style.display = tasks.length > 0 ? "none" : "flex";
+
+
+
+
