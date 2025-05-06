@@ -7,12 +7,12 @@
     "theme_color": "#1a1a1a",
     "icons": [
       {
-        "src": "/image/BookmarkBook.png",
+        "src": "/image/red.png",
         "sizes": "192x192",
         "type": "image/png"
       },
       {
-        "src": "/image/BookmarkBook.png",
+        "src": "/image/red.png",
         "sizes": "512x512",
         "type": "image/png"
       }
