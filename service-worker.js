@@ -1,4 +1,4 @@
-const CACHE_NAME = 'stacktasks-cache-v12'; // <- bumped version
+const CACHE_NAME = 'stacktasks-cache-v5'; // <- bump version when updating
 const urlsToCache = [
   '/',
   '/index.html',
@@ -45,7 +45,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
   );
-  self.skipWaiting();
+  self.skipWaiting(); // force waiting SW to activate immediately
 });
 
 self.addEventListener('activate', event => {
@@ -58,7 +58,7 @@ self.addEventListener('activate', event => {
       )
     )
   );
-  return self.clients.claim();
+  return self.clients.claim(); // take control of clients
 });
 
 self.addEventListener('fetch', event => {
