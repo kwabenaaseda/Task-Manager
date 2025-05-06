@@ -1,4 +1,4 @@
-const CACHE_NAME = 'stacktasks-cache-v8'; // <- bump version when updating
+const CACHE_NAME = 'stacktasks-cache-v12'; // <- bumped version
 const urlsToCache = [
   '/',
   '/index.html',
@@ -24,13 +24,28 @@ const urlsToCache = [
   '/pages/user/homepage.html',
   '/pages/user/previous.html',
   '/pages/user/schedule.html',
+
+  // New icons
+  '/icons/icon-48x48.png',
+  '/icons/icon-72x72.png',
+  '/icons/icon-96x96.png',
+  '/icons/icon-144x144.png',
+  '/icons/icon-192x192.png',
+  '/icons/icon-256x256.png',
+  '/icons/icon-384x384.png',
+  '/icons/icon-512x512.png',
+  '/icons/favicon.svg',
+  '/icons/favicon-96x96.png',
+  '/icons/favicon.ico',
+  '/icons/apple-touch-icon.png',
+  '/icons/site.webmanifest'
 ];
 
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
   );
-  self.skipWaiting(); // force waiting SW to activate immediately
+  self.skipWaiting();
 });
 
 self.addEventListener('activate', event => {
@@ -43,7 +58,7 @@ self.addEventListener('activate', event => {
       )
     )
   );
-  return self.clients.claim(); // take control of clients
+  return self.clients.claim();
 });
 
 self.addEventListener('fetch', event => {
