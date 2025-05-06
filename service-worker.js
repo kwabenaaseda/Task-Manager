@@ -1,4 +1,4 @@
-const CACHE_NAME = 'stacktasks-cache-v5'; // <- bump version when updating
+const CACHE_NAME = 'stacktasks-cache-v6'; // <- bump version when updating
 const urlsToCache = [
   '/',
   '/index.html',

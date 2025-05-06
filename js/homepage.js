@@ -72,7 +72,7 @@ taskForm.addEventListener("submit", (e) => {
     undetermined: "/image/black.png"
   };
 
-  urgent.innerHTML = `<img src="${priorityIcons[priority]}" class="flames" alt="flame" />`;
+  urgent.innerHTML = `<img src="${priorityIcons[priority]}" class="flames" alt="flame" id="f-Active"/>`;
   task.appendChild(urgent);
 
   const deleteBtn = document.createElement("button");
@@ -93,7 +93,7 @@ taskForm.addEventListener("submit", (e) => {
   CompletedBtn.textContent="✅"
   //Function Calls
   CompletedBtn.addEventListener("click",()=>{
-    if (CompletedBtn.textContent="✅"){
+    if (CompletedBtn.textContent==="✅"){
       CompletedBtn.textContent="✔"
     }else{
       CompletedBtn.textContent="✅"
@@ -261,10 +261,28 @@ function Update(event) {
   };
 }
 
- function Complete(event){
+ function Complete(event){  
+  const taskDiv = event.target.closest('.task-item');
   const taskClass = event.target.className;
-  const Body =document.getElementById(taskClass)
-  Body.style.borderLeftColor="red";
+  taskDiv.id = "Active";
+    document.getElementById("f-Active").setAttribute("src","/image/yellow.png")
+    console.log(document.getElementById("f-Active").parentElement.parentElement.firstElementChild.textContent)
+  console.log(taskDiv)
+  ///
+  const updatedData = {
+    name: document.getElementById("f-Active").parentElement.parentElement.firstElementChild.textContent,
+    priority: document.getElementById("taskPriority").value,
+    schedule: document.getElementById("taskSchedule").value,
+    description: document.getElementById("taskDesc").value,
+    share: document.getElementById("shareTask").checked,
+    collab: document.getElementById("collaborateTask").checked
+  };
+
+  // Save to localStorage    
+  localStorage.setItem("Done", JSON.stringify(updatedData)); 
+  console.log(document.getElementById("taskName").value)
+  
+
        }  
       
 // Side Menu Handlers
@@ -353,7 +371,7 @@ window.addEventListener("DOMContentLoaded", () => {
         undetermined: "/image/black.png"
       };
 
-      urgent.innerHTML = `<img src="${priorityIcons[taskData.priority]}" class="flames" alt="flame" />`;
+      urgent.innerHTML = `<img src="${priorityIcons[taskData.priority]}" class="flames" alt="flame" id="f-Active" />`;
       task.appendChild(urgent);
       // Delete, update and Completed buttons
       const deleteBtn = document.createElement("button");
